@@ -1,21 +1,16 @@
+import os
 import sys
-sys.path.append('/d/Developer/Projects/inventory_management_py/src')
 
-from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
-from controllers.inventory_controller import inventory_bp
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-app = Flask(__name__)
+from src import create_app
 
-# Configuración de la base de datos
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:secreta@localhost:3306/inventary'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app = create_app()
 
-db = SQLAlchemy(app)
-
-# Registrar el blueprint del controlador de inventario
-app.register_blueprint(inventory_bp, url_prefix='/api/inventory')
+# Ruta para la página principal
+@app.route('/')
+def index():
+    return "Bienvenido a la API de Gestión de Inventario"
 
 if __name__ == '__main__':
     app.run(debug=True)
-
