@@ -8,7 +8,9 @@ def create_app():
 
     db.init_app(app)
 
+    from src.controllers.user_controller import user_bp 
     from src.controllers.inventory_controller import inventory_bp
+    app.register_blueprint(user_bp, url_prefix='/api/users')
     app.register_blueprint(inventory_bp, url_prefix='/api/inventory')
 
     return app
